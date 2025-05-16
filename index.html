@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Disease Surveillance System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Global Disease Surveillance System</h1>
+            <p>Monitoring global health threats in real-time</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="diseases.html">Diseases Information</a></li>
+    <li><a href="alerts.html">Alerts</a></li>
+    <li><a href="about.html">About</a></li>
+</ul>
+
+            
+            <div class="search-box">
+    <input type="text" id="diseaseSearch" placeholder="Search diseases..." aria-label="Search diseases">
+    <button id="searchButton">
+        <i class="fas fa-search"></i> Search
+    </button>
+</div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="dashboard">
+            <h2>Global Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Active Cases</h3>
+                    <p class="number">12,456,789</p>
+                    <p class="trend up">↑ 2.3% from last week</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Countries Affected</h3>
+                    <p class="number">187</p>
+                    <p class="trend up">↑ 1 new country</p>
+                </div>
+                <div class="stat-card">
+                    <h3>New Cases Today</h3>
+                    <p class="number">124,567</p>
+                    <p class="trend down">↓ 0.8% from yesterday</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Fatality Rate</h3>
+                    <p class="number">3.2%</p>
+                    <p class="trend stable">↔ No change</p>
+                </div>
+            </div>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Global Disease Surveillance - Country Health Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: auto;
+        }
+
+        #countrySelector {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 style="text-align:center;">Country Health Trend Graph</h2>
+
+    <select id="countrySelector">
+        <option value="USA">USA</option>
+        <option value="China">China</option>
+        <option value="India">India</option>
+        <option value="Pakistan">Pakistan</option>
+        <option value="Bangladesh">Bangladesh</option>
+        <option value="Brazil">Brazil</option>
+        <option value="Russia">Russia</option>
+        <option value="SouthAfrica">South Africa</option>
+        <option value="Germany">Germany</option>
+        <option value="UK">UK</option>
+        <option value="Japan">Japan</option>
+    </select>
+
+    <div class="chart-container">
+        <canvas id="globalTrendChart"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('globalTrendChart').getContext('2d');
+
+        const countryHealthData = {
+            USA: [120, 180, 200, 160, 190],
+            China: [90, 150, 180, 170, 200],
+            India: [100, 140, 160, 180, 220],
+            Pakistan: [60, 100, 130, 120, 140],
+            Bangladesh: [70, 110, 150, 130, 160],
+            Brazil: [110, 140, 170, 160, 190],
+            Russia: [100, 130, 140, 150, 180],
+            SouthAfrica: [80, 120, 140, 130, 150],
+            Germany: [90, 110, 130, 120, 140],
+            UK: [95, 125, 145, 135, 155],
+            Japan: [85, 115, 135, 125, 145]
+        };
+
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Health Cases',
+                    data: countryHealthData['USA'],
+                    borderColor: 'blue',
+                    backgroundColor: 'rgba(0, 0, 255, 0.1)',
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Health Trends by Country'
+                    }
+                }
+            }
+        });
+
+        document.getElementById('countrySelector').addEventListener('change', function () {
+            const selectedCountry = this.value;
+            chart.data.datasets[0].data = countryHealthData[selectedCountry];
+            chart.data.datasets[0].label = `${selectedCountry} Health Cases`;
+            chart.update();
+        });
+    </script>
+
+</body>
+</html>
+
+        </section>
+
+        <section id="diseases">
+            <h2>Tracked Diseases</h2>
+            <div class="filter-controls">
+                <button class="active" data-filter="all">All</button>
+                <button data-filter="viral">Viral</button>
+                <button data-filter="bacterial">Bacterial</button>
+                <button data-filter="parasitic">Parasitic</button>
+                <button data-filter="emerging">Emerging</button>
+            </div>
+
+            <div class="disease-grid">
+                <!-- COVID-19 -->
+                <a href="https://covid19.who.int/"  class="disease-card viral emerging" data-severity="high">
+                  <!--<a href="https://covid19.who.int/" target="_blank">Visit WHO COVID-19 Dashboard</a>-->  
+                    <h3>COVID-19</h3>
+                    <div class="card-content">
+                        <p><strong>Cases:</strong> 6,543,210</p>
+                        <p><strong>Growth:</strong> +1.2% weekly</p>
+                        <p><strong>Countries:</strong> 192</p>
+                    </div>
+                    <span class="severity high">High Risk</span>
+                </a>
+
+                <!-- Malaria -->
+                <a href="https://www.who.int/teams/global-malaria-programme" class="disease-card parasitic" data-severity="medium">
+                    <h3>Malaria</h3>
+                    <div class="card-content">
+                        <p><strong>Cases:</strong> 241,000,000</p>
+                        <p><strong>Growth:</strong> +0.5% yearly</p>
+                        <p><strong>Countries:</strong> 87</p>
+                    </div>
+                    <span class="severity medium">Medium Risk</span>
+                </a>
+
+                <!-- Tuberculosis -->
+                <a href="https://www.stoptb.org" class="disease-card bacterial" data-severity="high">
+                    <h3>Tuberculosis</h3>
+                    <div class="card-content">
+                        <p><strong>Cases:</strong> 10,000,000</p>
+                        <p><strong>Growth:</strong> -1.1% yearly</p>
+                        <p><strong>Countries:</strong> 145</p>
+                    </div>
+                    <span class="severity high">High Risk</span>
+                </a>
+
+                <!-- HIV/AIDS -->
+                <a href="https://www.unaids.org" class="disease-card viral" data-severity="high">
+                    <h3>HIV/AIDS</h3>
+                    <div class="card-content">
+                        <p><strong>Cases:</strong> 38,400,000</p>
+                        <p><strong>Growth:</strong> +0.3% yearly</p>
+                        <p><strong>Countries:</strong> 178</p>
+                    </div>
+                    <span class="severity high">High Risk</span>
+                </a>
+
+                <!-- Ebola -->
+                <a href="https://www.cdc.gov/vhf/ebola" class="disease-card viral emerging" data-severity="medium">
+                    <h3>Ebola</h3>
+                    <div class="card-content">
+                        <p><strong>Cases:</strong> 1,450</p>
+                        <p><strong>Growth:</strong> +15% in outbreak zones</p>
+                        <p><strong>Countries:</strong> 4</p>
+                    </div>
+                    <span class="severity medium">Medium Risk</span>
+                </a>
+                <a href="https://www.who.int/news-room/fact-sheets/detail/dengue-and-severe-dengue" class="disease-card viral" data-severity="medium">
+            <h3>Dengue</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 100,000,000</p>
+                <p><strong>Growth:</strong> +5% yearly</p>
+                <p><strong>Countries:</strong> 100+</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/zika-virus" class="disease-card viral emerging" data-severity="medium">
+            <h3>Zika Virus</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 500,000+</p>
+                <p><strong>Growth:</strong> Sporadic</p>
+                <p><strong>Countries:</strong> 89</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/measles" class="disease-card viral" data-severity="high">
+            <h3>Measles</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 9,000,000</p>
+                <p><strong>Growth:</strong> +7% in outbreaks</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/vhf/ebola" class="disease-card viral emerging" data-severity="high">
+            <h3>Ebola</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,450</p>
+                <p><strong>Growth:</strong> +15% in outbreak zones</p>
+                <p><strong>Countries:</strong> 4</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/rabies" class="disease-card viral" data-severity="high">
+            <h3>Rabies</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 59,000</p>
+                <p><strong>Growth:</strong> Stable</p>
+                <p><strong>Countries:</strong> 150+</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/health-topics/poliomyelitis" class="disease-card viral" data-severity="medium">
+            <h3>Polio</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,000+</p>
+                <p><strong>Growth:</strong> -99% since 1988</p>
+                <p><strong>Countries:</strong> 2 endemic</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <!-- Bacterial Diseases -->
+        <a href="https://www.stoptb.org" class="disease-card bacterial" data-severity="high">
+            <h3>Tuberculosis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 10,000,000</p>
+                <p><strong>Growth:</strong> -1.1% yearly</p>
+                <p><strong>Countries:</strong> 145</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/cholera" class="disease-card bacterial" data-severity="high">
+            <h3>Cholera</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 4,000,000</p>
+                <p><strong>Growth:</strong> +2% in outbreaks</p>
+                <p><strong>Countries:</strong> 47</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/typhoid-fever" class="disease-card bacterial" data-severity="medium">
+            <h3>Typhoid Fever</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 11,000,000</p>
+                <p><strong>Growth:</strong> -3% yearly</p>
+                <p><strong>Countries:</strong> 76</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/plague" class="disease-card bacterial" data-severity="medium">
+            <h3>Plague</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,000-2,000</p>
+                <p><strong>Growth:</strong> Stable</p>
+                <p><strong>Countries:</strong> 15+</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/tetanus" class="disease-card bacterial" data-severity="medium">
+            <h3>Tetanus</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 34,000</p>
+                <p><strong>Growth:</strong> -96% since 1988</p>
+                <p><strong>Countries:</strong> 35+</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/diphtheria" class="disease-card bacterial" data-severity="medium">
+            <h3>Diphtheria</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 7,000+</p>
+                <p><strong>Growth:</strong> Sporadic outbreaks</p>
+                <p><strong>Countries:</strong> 20+</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/pertussis" class="disease-card bacterial" data-severity="medium">
+            <h3>Whooping Cough</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 24,000,000</p>
+                <p><strong>Growth:</strong> Cyclical</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/meningococcal-meningitis" class="disease-card bacterial" data-severity="high">
+            <h3>Bacterial Meningitis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 2,800,000</p>
+                <p><strong>Growth:</strong> Seasonal</p>
+                <p><strong>Countries:</strong> 50+</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/leprosy" class="disease-card bacterial" data-severity="low">
+            <h3>Leprosy</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 200,000+</p>
+                <p><strong>Growth:</strong> -1% yearly</p>
+                <p><strong>Countries:</strong> 120+</p>
+            </div>
+            <span class="severity low">Low Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/gonorrhoea-(neisseria-gonorrhoeae-infection)" class="disease-card bacterial" data-severity="medium">
+            <h3>Gonorrhea</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 87,000,000</p>
+                <p><strong>Growth:</strong> +1.5% yearly</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <!-- Parasitic Diseases -->
+        <a href="https://www.who.int/teams/global-malaria-programme" class="disease-card parasitic" data-severity="high">
+            <h3>Malaria</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 241,000,000</p>
+                <p><strong>Growth:</strong> +0.5% yearly</p>
+                <p><strong>Countries:</strong> 87</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/parasites/amebiasis" class="disease-card parasitic" data-severity="medium">
+            <h3>Amoebiasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 50,000,000</p>
+                <p><strong>Growth:</strong> Stable</p>
+                <p><strong>Countries:</strong> 100+</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/leishmaniasis" class="disease-card parasitic" data-severity="medium">
+            <h3>Leishmaniasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,000,000</p>
+                <p><strong>Growth:</strong> +1% yearly</p>
+                <p><strong>Countries:</strong> 98</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/schistosomiasis" class="disease-card parasitic" data-severity="medium">
+            <h3>Schistosomiasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 240,000,000</p>
+                <p><strong>Growth:</strong> -2% yearly</p>
+                <p><strong>Countries:</strong> 78</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/parasites/giardia" class="disease-card parasitic" data-severity="low">
+            <h3>Giardiasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 280,000,000</p>
+                <p><strong>Growth:</strong> Stable</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity low">Low Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/parasites/toxoplasmosis" class="disease-card parasitic" data-severity="low">
+            <h3>Toxoplasmosis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 2,000,000,000</p>
+                <p><strong>Growth:</strong> Stable</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity low">Low Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/trypanosomiasis-human-african-(sleeping-sickness)" class="disease-card parasitic" data-severity="medium">
+            <h3>Sleeping Sickness</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,000</p>
+                <p><strong>Growth:</strong> -95% since 2001</p>
+                <p><strong>Countries:</strong> 24</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/soil-transmitted-helminth-infections" class="disease-card parasitic" data-severity="low">
+            <h3>Ascariasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 800,000,000</p>
+                <p><strong>Growth:</strong> -3% yearly</p>
+                <p><strong>Countries:</strong> 120+</p>
+            </div>
+            <span class="severity low">Low Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/parasites/hookworm" class="disease-card parasitic" data-severity="low">
+            <h3>Hookworm</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 500,000,000</p>
+                <p><strong>Growth:</strong> -2% yearly</p>
+                <p><strong>Countries:</strong> 100+</p>
+            </div>
+            <span class="severity low">Low Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/lymphatic-filariasis" class="disease-card parasitic" data-severity="medium">
+            <h3>Filariasis</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 51,000,000</p>
+                <p><strong>Growth:</strong> -4% yearly</p>
+                <p><strong>Countries:</strong> 81</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <!-- Emerging/Re-emerging Diseases -->
+        <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019" class="disease-card emerging viral" data-severity="high">
+            <h3>COVID-19</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 6,543,210</p>
+                <p><strong>Growth:</strong> +1.2% weekly</p>
+                <p><strong>Countries:</strong> 192</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/nipah-virus" class="disease-card emerging" data-severity="high">
+            <h3>Nipah Virus</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 700+</p>
+                <p><strong>Growth:</strong> Sporadic</p>
+                <p><strong>Countries:</strong> 5</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/monkeypox" class="disease-card emerging" data-severity="medium">
+            <h3>Monkeypox</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 87,000</p>
+                <p><strong>Growth:</strong> Declining</p>
+                <p><strong>Countries:</strong> 110</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/zika-virus" class="disease-card emerging viral" data-severity="medium">
+            <h3>Zika Virus</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 500,000+</p>
+                <p><strong>Growth:</strong> Sporadic</p>
+                <p><strong>Countries:</strong> 89</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/influenza-(avian-and-other-zoonotic)" class="disease-card emerging" data-severity="high">
+            <h3>Avian Influenza</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 2,000+</p>
+                <p><strong>Growth:</strong> Sporadic</p>
+                <p><strong>Countries:</strong> 28</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/crimean-congo-haemorrhagic-fever" class="disease-card emerging" data-severity="high">
+            <h3>Congo Hemorrhagic Fever</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,000+</p>
+                <p><strong>Growth:</strong> +5% yearly</p>
+                <p><strong>Countries:</strong> 30+</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/tuberculosis" class="disease-card emerging bacterial" data-severity="high">
+            <h3>Drug-resistant TB</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 500,000</p>
+                <p><strong>Growth:</strong> +3% yearly</p>
+                <p><strong>Countries:</strong> 120+</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/antimicrobial-resistance" class="disease-card emerging bacterial" data-severity="high">
+            <h3>MRSA</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 150,000+</p>
+                <p><strong>Growth:</strong> +2% yearly</p>
+                <p><strong>Countries:</strong> Worldwide</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.cdc.gov/vhf/ebola" class="disease-card emerging viral" data-severity="high">
+            <h3>Ebola Virus</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 1,450</p>
+                <p><strong>Growth:</strong> +15% in outbreak zones</p>
+                <p><strong>Countries:</strong> 4</p>
+            </div>
+            <span class="severity high">High Risk</span>
+        </a>
+
+        <a href="https://www.who.int/news-room/fact-sheets/detail/chikungunya" class="disease-card emerging viral" data-severity="medium">
+            <h3>Chikungunya</h3>
+            <div class="card-content">
+                <p><strong>Cases:</strong> 3,000,000+</p>
+                <p><strong>Growth:</strong> Sporadic</p>
+                <p><strong>Countries:</strong> 115</p>
+            </div>
+            <span class="severity medium">Medium Risk</span>
+        </a>
+
+
+
+
+
+
+                <!-- Add 35+ more disease cards following the same pattern -->
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>Global Disease Surveillance</h3>
+                <p>Monitoring global health threats in real-time to enable faster response and better public health outcomes.</p>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#accessibility">Accessibility</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Data Sources</h3>
+                <ul class="data-sources">
+                    <li><a href="https://www.who.int" target="_blank">World Health Organization</a></li>
+                    <li><a href="https://www.cdc.gov" target="_blank">CDC</a></li>
+                    <li><a href="https://www.ecdc.europa.eu" target="_blank">ECDC</a></li>
+                    <li><a href="https://ourworldindata.org" target="_blank">Our World in Data</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="quick-links">
+                    <li><a href="#dashboard">Global Dashboard</a></li>
+                    <li><a href="#alerts">Outbreak Alerts</a></li>
+                    <li><a href="#api">Developer API</a></li>
+                    <li><a href="#contact">Report Data Issue</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Subscribe to Alerts</h3>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Your email address" required>
+                    <select>
+                        <option value="all">All Alerts</option>
+                        <option value="high">High Risk Only</option>
+                        <option value="regional">My Region Only</option>
+                    </select>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div class="social-links">
+                    <a href="#" aria-label="Twitter"><i class="social-icon">𝕏</i></a>
+                    <a href="#" aria-label="Facebook"><i class="social-icon">f</i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="social-icon">in</i></a>
+                    <a href="#" aria-label="RSS Feed"><i class="social-icon">RSS</i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="current-year"></span> Global Disease Surveillance System. All data is provided for public health purposes.</p>
+            <p class="update-info">Last updated: <span id="last-updated"></span></p>
+            <p class="version">Version: 2.1.0</p>
+        </div>
+    </div>
+
+    <script>
+        // Auto-update year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Display last updated date
+        const lastUpdated = new Date();
+        document.getElementById('last-updated').textContent = lastUpdated.toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    </script>
+</footer>
+
+
+    <script src="script.js"></script>
+
+
+
+    <!-- In index.html, update the disease-grid section -->
+<div class="disease-grid" id="diseaseContainer">
+    <!-- This will be populated by JavaScript -->
+</div>
+
+<script>
+// Load disease data and generate cards
+fetch('diseases-data.js')
+    .then(response => response.json())
+    .then(data => {
+        const container = document.getElementById('diseaseContainer');
+        
+        Object.entries(data.diseases).forEach(([id, disease]) => {
+            const card = document.createElement('a');
+            card.href = `diseases/${id}.html`;
+            card.className = `disease-card ${disease.type} ${disease.severity}`;
+            card.innerHTML = `
+                <h3>${disease.name}</h3>
+                <div class="card-content">
+                    <p><strong>Cases:</strong> ${disease.cases.toLocaleString()}</p>
+                    <p><strong>Growth:</strong> ${disease.growthRate > 0 ? '+' : ''}${disease.growthRate}% weekly</p>
+                    <p><strong>Countries:</strong> ${disease.countriesAffected}</p>
+                </div>
+                <span class="severity ${disease.severity}">${disease.severity === 'high' ? 'High' : disease.severity === 'medium' ? 'Medium' : 'Low'} Risk</span>
+            `;
+            container.appendChild(card);
+        });
+    });
+
+
+    <!-- auth-modal.html -->
+<div id="authModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Health Professional Login</h2>
+        <form id="loginForm">
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <div class="auth-links">
+            <a href="#register">Register</a>
+            <a href="#forgot-password">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="realtime-dashboard">
+    <div class="dashboard-header">
+        <h2>Real-time Disease Monitoring</h2>
+        <div class="time-filter">
+            <button data-range="24h">24 Hours</button>
+            <button data-range="7d" class="active">7 Days</button>
+            <button data-range="30d">30 Days</button>
+        </div>
+    </div>
+    <div class="dashboard-metrics">
+        <div class="metric">
+            <h3>New Cases</h3>
+            <div class="value" id="newCases">--</div>
+            <div class="trend" id="newCasesTrend"></div>
+        </div>
+        <!-- Add more metrics -->
+    </div>
+    <div class="dashboard-map" id="diseaseMap"></div>
+</div>
+
+
+<!-- In your main page (index.html) -->
+<button id="emergencyAlertBtn" class="emergency-btn">
+    <i class="fas fa-phone-alt"></i> Emergency Contacts
+</button>
+
+<!-- Emergency Contacts Page (emergency-contacts.html) -->
+<div class="emergency-contacts-container">
+    <h2><i class="fas fa-phone-emergency"></i> Global Emergency Numbers</h2>
+    
+    <div class="country-selector">
+        <label for="countrySelect">Select Your Country:</label>
+        <select id="countrySelect">
+            <option value="">-- Select Country --</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="CA">Canada</option>
+            <option value="AU">Australia</option>
+            <option value="IN">India</option>
+            <option value="JP">Japan</option>
+            <option value="DE">Germany</option>
+            <option value="FR">France</option>
+            <!-- Add more countries as needed -->
+        </select>
+    </div>
+    
+    <div id="emergencyNumbers" class="emergency-numbers">
+        <!-- Numbers will appear here -->
+        <div class="no-selection">
+            <p>Please select a country to view emergency numbers</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- Replace the emergency button with this alerts button -->
+<button id="alertsBtn" class="alerts-btn">
+    <i class="fas fa-bell"></i> Alerts
+</button>
+
+<!-- Alerts Panel (initially hidden) -->
+<div id="alertsPanel" class="alerts-panel">
+    <div class="alerts-header">
+        <h3><i class="fas fa-exclamation-triangle"></i> Important Alerts</h3>
+        <button class="close-panel">&times;</button>
+    </div>
+    
+    <div class="alerts-tabs">
+        <button class="tab-btn active" data-tab="emergency">Emergency Contacts</button>
+        <button class="tab-btn" data-tab="outbreaks">Disease Outbreaks</button>
+        <button class="tab-btn" data-tab="updates">Health Updates</button>
+    </div>
+    
+    <div class="tab-content active" id="emergencyTab">
+        <div class="country-selector">
+            <label for="countrySelect">Select Country:</label>
+            <select id="countrySelect">
+                <option value="">-- Select --</option>
+                <option value="US">United States</option>
+                <option value="GB">UK</option>
+                <option value="CA">Canada</option>
+                <!-- Add more countries -->
+            </select>
+        </div>
+        
+        <div id="emergencyNumbers" class="emergency-numbers">
+            <div class="no-selection">
+                <p>Select a country to view emergency numbers</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="outbreaksTab">
+        <div class="alert-item">
+            <h4><i class="fas fa-virus"></i> COVID-19 Update</h4>
+            <p>New variant detected in 5 countries. Increased vigilance recommended.</p>
+            <span class="alert-date">Today, 10:45 AM</span>
+        </div>
+        <div class="alert-item">
+            <h4><i class="fas fa-bug"></i> Malaria Outbreak</h4>
+            <p>Seasonal outbreak reported in tropical regions. Prevention measures advised.</p>
+            <span class="alert-date">Yesterday, 3:30 PM</span>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="updatesTab">
+        <div class="alert-item">
+            <h4><i class="fas fa-syringe"></i> Vaccination Campaign</h4>
+            <p>New influenza vaccines now available at all public health centers.</p>
+            <span class="alert-date">2 days ago</span>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay when panel is open -->
+<div id="alertsOverlay" class="alerts-overlay"></div>
+</script>
+
+
+
+
+
+
+
+</body>
+</html>
