@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hepatitis B | Global Disease Surveillance</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="disease-header">
+        <div class="container">
+            <h1><i class="fas fa-liver"></i> Hepatitis B</h1>
+            <p>Hepatitis B Virus (HBV)</p>
+        </div>
+    </header>
+
+    <nav class="disease-nav">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="container disease-container">
+        <section id="description" class="disease-section">
+            <h2><i class="fas fa-info-circle"></i> Description</h2>
+            <p>Hepatitis B is a potentially life-threatening liver infection caused by the hepatitis B virus (HBV). It is a major global health problem that can cause chronic infection and puts people at high risk of death from cirrhosis and liver cancer.</p>
+        </section>
+
+        <section id="statistics" class="disease-section">
+            <h2><i class="fas fa-chart-bar"></i> Global Statistics</h2>
+            <div class="chart-container">
+                <canvas id="globalTrendChart"></canvas>
+            </div>
+            <div class="chart-description">
+                <p>An estimated 296 million people are living with hepatitis B infection worldwide, with 1.5 million new infections each year.</p>
+            </div>
+        </section>
+
+        <section id="symptoms" class="disease-section">
+            <h2><i class="fas fa-thermometer-half"></i> Symptoms</h2>
+            <div class="symptoms-grid">
+                <div class="symptom-card">
+                    <h3>Acute Infection</h3>
+                    <ul>
+                        <li>Jaundice (yellow skin/eyes)</li>
+                        <li>Dark urine</li>
+                        <li>Extreme fatigue</li>
+                        <li>Nausea/vomiting</li>
+                        <li>Abdominal pain</li>
+                    </ul>
+                </div>
+                <div class="symptom-card">
+                    <h3>Chronic Infection</h3>
+                    <ul>
+                        <li>Often asymptomatic for decades</li>
+                        <li>Cirrhosis symptoms (swelling, bruising)</li>
+                        <li>Liver cancer may develop</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="perspectives" class="disease-section">
+            <h2><i class="fas fa-hourglass-half"></i> Historical, Current and Future Perspectives</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1965</h3>
+                    <p>HBV discovered by Dr. Baruch Blumberg</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>1982</h3>
+                    <p>First hepatitis B vaccine approved</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Current</h3>
+                    <p>296 million chronic cases worldwide</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Future</h3>
+                    <p>WHO aims to eliminate HBV by 2030</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="disease-section">
+            <h2><i class="far fa-newspaper"></i> Latest News</h2>
+            <div class="news-grid">
+                <article class="news-card">
+                    <h3>New Treatment Breakthrough</h3>
+                    <p>Researchers discover new antiviral with 90% efficacy in trials...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </article>
+                <article class="news-card">
+                    <h3>Vaccination Campaign Success</h3>
+                    <p>Country X reduces HBV rates by 75% through neonatal vaccination...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="country-data" class="disease-section">
+            <h2><i class="fas fa-globe-americas"></i> Country-Specific Data</h2>
+            <div class="country-selector">
+                <select id="countrySelect">
+                    <option value="">Select Country</option>
+                    <option value="CN">China</option>
+                    <option value="IN">India</option>
+                    <option value="NG">Nigeria</option>
+                </select>
+            </div>
+            <div class="chart-container">
+                <canvas id="countryChart"></canvas>
+            </div>
+        </section>
+
+        <section id="prevention" class="disease-section">
+            <h2><i class="fas fa-shield-virus"></i> Prevention Tips</h2>
+            <div class="prevention-grid">
+                <div class="prevention-card">
+                    <i class="fas fa-syringe"></i>
+                    <h3>Vaccination</h3>
+                    <p>HBV vaccine is 95% effective and provides lifelong immunity</p>
+                </div>
+                <div class="prevention-card">
+                    <i class="fas fa-handshake-slash"></i>
+                    <h3>Safe Practices</h3>
+                    <p>Avoid sharing needles or personal items like razors</p>
+                </div>
+                <div class="prevention-card">
+                    <i class="fas fa-vial"></i>
+                    <h3>Screening</h3>
+                    <p>Pregnant women should be tested to prevent mother-to-child transmission</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="disease-footer">
+        <div class="container">
+            <p>Data sources: WHO, CDC, ECDC | Last updated: <span id="currentDate"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Global Trends Chart
+        const globalCtx = document.getElementById('globalTrendChart').getContext('2d');
+        new Chart(globalCtx, {
+            type: 'bar',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'Chronic Cases (millions)',
+                    data: [257, 267, 276, 286, 291, 296],
+                    backgroundColor: '#2ecc71'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Global Hepatitis B Chronic Cases'
+                    }
+                }
+            }
+        });
+
+        // Country Data Chart
+        const countryCtx = document.getElementById('countryChart').getContext('2d');
+        let countryChart = new Chart(countryCtx, {
+            type: 'pie',
+            data: {},
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Select a country to view data'
+                    }
+                }
+            }
+        });
+
+        // Update country chart when selection changes
+        document.getElementById('countrySelect').addEventListener('change', function() {
+            const country = this.value;
+            if (country) {
+                // In a real app, you would fetch this data from an API
+                const sampleData = {
+                    'CN': {
+                        labels: ['Chronic Cases', 'Vaccinated', 'Acute Infections'],
+                        data: [84, 900, 1.2],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    },
+                    'IN': {
+                        labels: ['Chronic Cases', 'Vaccinated', 'Acute Infections'],
+                        data: [40, 500, 0.8],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    },
+                    'NG': {
+                        labels: ['Chronic Cases', 'Vaccinated', 'Acute Infections'],
+                        data: [19, 120, 0.5],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    }
+                };
+                
+                const data = sampleData[country];
+                countryChart.data.labels = data.labels;
+                countryChart.data.datasets = [{
+                    data: data.data,
+                    backgroundColor: data.colors
+                }];
+                countryChart.options.plugins.title.text = `Hepatitis B in ${this.options[this.selectedIndex].text}`;
+                countryChart.update();
+            }
+        });
+
+        // Update current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Disease Alerts & Emergency Response</title>
+    <style>
+        :root {
+            --primary: #d9534f;
+            --secondary: #0275d8;
+            --dark: #292b2c;
+            --light: #f7f7f7;
+            --success: #5cb85c;
+            --warning: #f0ad4e;
+            --danger: #d9534f;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header & Theme Toggle */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .theme-toggle {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Alert Banner */
+        .alert-banner {
+            background-color: #ffcccc;
+            color: #a30000;
+            padding: 12px;
+            border: 1px solid #ff0000;
+            animation: marquee 20s linear infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: bold;
+            margin-bottom: 25px;
+            border-radius: 5px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Sections */
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        body.dark-mode .section {
+            background: #333;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+        }
+
+        body.dark-mode h1, 
+        body.dark-mode h2, 
+        body.dark-mode h3 {
+            color: #ff6b6b;
+        }
+
+        /* Tables */
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .contact-table th, .contact-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .contact-table th {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .contact-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        body.dark-mode .contact-table tr:nth-child(even) {
+            background-color: #444;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .feature-card {
+            background: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .feature-card h3 {
+            margin-top: 0;
+            color: var(--secondary);
+        }
+
+        /* Map */
+        .map-container {
+            height: 400px;
+            background: #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 18px;
+        }
+
+        /* Symptom Checker Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        body.dark-mode .modal-content {
+            background-color: #333;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+    </style>
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 Global Disease Alerts & Emergency Response</h1>
+            <button class="theme-toggle" id="themeToggle">Dark Mode</button>
+        </header>
+
+        <!-- Live Alert Banner -->
+        <div class="alert-banner">
+            ⚠️ URGENT: Cholera outbreak in central Africa (12,000+ cases) • Dengue rising in Southeast Asia (WHO Alert) • COVID Variant-X detected in 3 countries • Global heatwave health advisory ⚠️
+        </div>
+
+        <!-- ================== -->
+        <!-- 50+ COUNTRY CONTACTS -->
+        <!-- ================== -->
+        <div class="section">
+            <h2>📞 Global Emergency Health Contacts (50+ Countries)</h2>
+            <div style="overflow-x: auto;">
+                <table class="contact-table">
+                    <thead>
+                        <tr>
+                            <th>Country</th>
+                            <th>Emergency Numbers</th>
+                            <th>Health Ministry</th>
+                            <th>Disease Control Center</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Americas -->
+                        <tr><td>🇺🇸 USA</td><td>911</td><td><a href="https://www.hhs.gov/" target="_blank">HHS Website</a></td><td><a href="https://www.cdc.gov" target="_blank">CDC</a></td></tr>
+                        <tr><td>🇨🇦 Canada</td><td>911</td><td><a href="https://www.canada.ca/en/health-canada.html" target="_blank">Health Canada</a></td><td><a href="https://www.canada.ca/en/public-health.html" target="_blank">PHAC</a></td></tr>
+                        <tr><td>🇧🇷 Brazil</td><td>192 (SAMU)</td><td><a href="https://www.gov.br/saude" target="_blank">Ministério da Saúde</a></td><td><a href="https://www.gov.br/saude/pt-br" target="_blank">Brazil Health</a></td></tr>
+                        <tr><td>🇲🇽 Mexico</td><td>911</td><td><a href="https://www.gob.mx/salud" target="_blank">Secretaría</a></td><td><a href="https://www.gob.mx/salud/acciones-y-programas/direccion-general-de-epidemiologia" target="_blank">DGE</a></td></tr>
+                        
+                        <!-- Europe -->
+                        <tr><td>🇬🇧 UK</td><td>999 or 111 (NHS)</td><td><a href="https://www.gov.uk/government/organisations/department-of-health-and-social-care" target="_blank">DHSC</a></td><td><a href="https://www.gov.uk/government/organisations/uk-health-security-agency" target="_blank">UKHSA</a></td></tr>
+                        <tr><td>🇩🇪 Germany</td><td>112 (General), 116117 (Medical)</td><td><a href="https://www.bundesgesundheitsministerium.de/en/" target="_blank">BMG</a></td><td><a href="https://www.rki.de/EN/Home/homepage_node.html" target="_blank">RKI</a></td></tr>
+                        <tr><td>🇫🇷 France</td><td>15 (Medical), 112 (Emergency)</td><td><a href="https://solidarites-sante.gouv.fr/" target="_blank">Ministère</a></td><td><a href="https://www.santepubliquefrance.fr/" target="_blank">Santé Publique</a></td></tr>
+                        <tr><td>🇮🇹 Italy</td><td>112 (General), 118 (Medical)</td><td><a href="https://www.salute.gov.it/portale/home.html" target="_blank">Ministero</a></td><td><a href="https://www.epicentro.iss.it/en/" target="_blank">ISS</a></td></tr>
+                        
+                        <!-- Asia -->
+                        <tr><td>🇨🇳 China</td><td>120 (Medical), 12320 (CDC)</td><td><a href="http://en.nhc.gov.cn/" target="_blank">NHC</a></td><td><a href="http://www.chinacdc.cn/en/" target="_blank">China CDC</a></td></tr>
+                        <tr><td>🇮🇳 India</td><td>102 (Ambulance), 1075 (Health)</td><td><a href="https://www.mohfw.gov.in/" target="_blank">MoHFW</a></td><td><a href="https://www.icmr.gov.in" target="_blank">ICMR</a></td></tr>
+                        <tr><td>🇯🇵 Japan</td><td>119 (Medical), 110 (Police)</td><td><a href="https://www.mhlw.go.jp/english/" target="_blank">MHLW</a></td><td><a href="https://www.niid.go.jp/niid/en/" target="_blank">NIID</a></td></tr>
+                        <tr><td>🇰🇷 South Korea</td><td>119</td><td><a href="http://www.mohw.go.kr/eng/" target="_blank">MOHW</a></td><td><a href="https://www.kdca.go.kr/eng/" target="_blank">KDCA</a></td></tr>
+                        
+                        <!-- Africa -->
+                        <tr><td>🇳🇬 Nigeria</td><td>112 (Emergency)</td><td><a href="https://www.health.gov.ng/" target="_blank">FMOH</a></td><td><a href="https://ncdc.gov.ng/" target="_blank">NCDC</a></td></tr>
+                        <tr><td>🇿🇦 South Africa</td><td>10177 (Ambulance)</td><td><a href="https://www.health.gov.za/" target="_blank">NDoH</a></td><td><a href="https://www.nicd.ac.za" target="_blank">NICD</a></td></tr>
+                        <tr><td>🇰🇪 Kenya</td><td>999</td><td><a href="https://www.health.go.ke/" target="_blank">MOH</a></td><td><a href="https://www.health.go.ke/" target="_blank">Disease Surveillance</a></td></tr>
+                        
+                        <!-- Middle East -->
+                        <tr><td>🇸🇦 Saudi Arabia</td><td>997</td><td><a href="https://www.moh.gov.sa/en/Pages/Default.aspx" target="_blank">MOH</a></td><td><a href="https://www.moh.gov.sa/en/CCC/Pages/default.aspx" target="_blank">CCC</a></td></tr>
+                        <tr><td>🇦🇪 UAE</td><td>998</td><td><a href="https://www.mohap.gov.ae/en" target="_blank">MOHAP</a></td><td><a href="https://www.dha.gov.ae/en/Pages/default.aspx" target="_blank">DHA</a></td></tr>
+                        
+                        <!-- Oceania -->
+                        <tr><td>🇦🇺 Australia</td><td>000 (Emergency)</td><td><a href="https://www.health.gov.au/" target="_blank">DoH</a></td><td><a href="https://www.health.gov.au/health-topics/communicable-diseases" target="_blank">CD Branch</a></td></tr>
+                        <tr><td>🇳🇿 New Zealand</td><td>111</td><td><a href="https://www.health.govt.nz/" target="_blank">MOH</a></td><td><a href="https://www.health.govt.nz/our-work/diseases-and-conditions" target="_blank">Disease Control</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p><em>🔍 Pro Tip: Use Ctrl+F to search for your country. Data sourced from WHO and national health agencies.</em></p>
+        </div>
+
+        <!-- ================== -->
+        <!-- EMERGENCY FEATURES -->
+        <!-- ================== -->
+        <div class="section">
+            <h2>🚨 Emergency Tools & Features</h2>
+            <div class="feature-grid">
+                <!-- AI Symptom Checker -->
+                <div class="feature-card">
+                    <h3>🩺 AI Symptom Checker</h3>
+                    <p>Get instant risk assessment for your symptoms with our AI-powered diagnostic tool.</p>
+                    <button class="btn btn-primary" onclick="openSymptomChecker()">Check Symptoms</button>
+                </div>
+
+                <!-- Vaccine Tracker -->
+                <div class="feature-card">
+                    <h3>💉 Vaccine Tracker</h3>
+                    <p>Find vaccination centers near you and check travel vaccine requirements.</p>
+                    <button class="btn btn-success" onclick="alert('Vaccine tracker would connect to your location or selected country')">Find Vaccines</button>
+                </div>
+
+                <!-- Travel Advisories -->
+                <div class="feature-card">
+                    <h3>✈️ Travel Advisories</h3>
+                    <p>Real-time alerts about disease risks in your destination country.</p>
+                    <button class="btn btn-warning" onclick="alert('Travel advisory system would show country-specific alerts')">Check Travel Risks</button>
+                </div>
+
+                <!-- Emergency Phrases -->
+                <div class="feature-card">
+                    <h3>🌐 Multilingual Help</h3>
+                    <p>Download our emergency medical phrasebook in 15 languages.</p>
+                    <button class="btn btn-primary" onclick="downloadPhrasebook()">Download Phrasebook</button>
+                </div>
+
+                <!-- SMS Alerts -->
+                <div class="feature-card">
+                    <h3>📱 SMS Alerts</h3>
+                    <p>Subscribe to receive outbreak alerts via text message in your region.</p>
+                    <button class="btn btn-danger" onclick="showSMSModal()">Subscribe Now</button>
+                </div>
+
+                <!-- Interactive Map -->
+                <div class="feature-card">
+                    <h3>🗺️ Outbreak Map</h3>
+                    <p>Live visualization of disease hotspots and health facilities worldwide.</p>
+                    <a href="#outbreakMapSection" class="btn btn-secondary">View Map</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================== -->
+        <!-- INTERACTIVE MAP -->
+        <!-- ================== -->
+        <div class="section" id="outbreakMapSection">
+            <h2>🗺️ Live Disease Outbreak Map</h2>
+            <div class="map-container">
+                <div id="outbreakMap" class="map-placeholder">
+                    Loading interactive map...
+                </div>
+            </div>
+            <div style="margin-top: 15px;">
+                <button class="btn btn-primary" onclick="alert('Map would zoom to your location')">Locate Me</button>
+                <button class="btn btn-secondary" onclick="alert('Legend toggles would appear here')">Map Legend</button>
+            </div>
+            <p><small>Red zones = Active outbreaks | Blue markers = Hospitals | Yellow = Vaccination centers</small></p>
+        </div>
+
+        <!-- ================== -->
+        <!-- MULTILINGUAL SUPPORT -->
+        <!-- ================== -->
+        <div class="section">
+            <h2>🌐 Essential Multilingual Phrases</h2>
+            <p>Critical medical phrases to communicate symptoms in local languages:</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+                <!-- Spanish -->
+                <div>
+                    <h4>🇪🇸 Spanish</h4>
+                    <ul>
+                        <li><strong>"Necesito un médico"</strong> - I need a doctor</li>
+                        <li><strong>"Tengo fiebre alta"</strong> - I have high fever</li>
+                        <li><strong>"No puedo respirar"</strong> - I can't breathe</li>
+                    </ul>
+                </div>
+                
+                <!-- French -->
+                <div>
+                    <h4>🇫🇷 French</h4>
+                    <ul>
+                        <li><strong>"J'ai besoin d'un médecin"</strong> - I need a doctor</li>
+                        <li><strong>"J'ai de la fièvre"</strong> - I have fever</li>
+                        <li><strong>"Je ne peux pas respirer"</strong> - I can't breathe</li>
+                    </ul>
+                </div>
+                
+                <!-- Arabic -->
+                <div>
+                    <h4>🇦🇪 Arabic</h4>
+                    <ul>
+                        <li><strong>"أحتاج إلى طبيب"</strong> - I need a doctor</li>
+                        <li><strong>"لدي ارتفاع في درجة الحرارة"</strong> - I have high temperature</li>
+                        <li><strong>"أشعر بالدوار"</strong> - I feel dizzy</li>
+                    </ul>
+                </div>
+                
+                <!-- Mandarin -->
+               
+            </div>
+            
+            <button class="btn btn-primary" style="margin-top: 20px;" onclick="downloadPhrasebook()">
+                📥 Download Full Phrasebook (15 Languages)
+            </button>
+        </div>
+
+        <!-- ================== -->
+        <!-- FOOTER -->
+        <!-- ================== -->
+        <footer style="text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #ddd;">
+            <p>© 2023 Global Disease Surveillance System | Data Sources: WHO, CDC, ECDC, National Health Agencies</p>
+            <p>
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Report Data Issue</a> | 
+                <a href="#">API Access</a> |
+                <a href="#">Developer Docs</a>
+            </p>
+        </footer>
+    </div>
+
+    <!-- ================== -->
+    <!-- MODALS -->
+    <!-- ================== -->
+    
+    <!-- AI Symptom Checker Modal -->
+    <div id="symptomModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('symptomModal')">&times;</span>
+            <h2>🩺 AI Symptom Checker</h2>
+            <p>Select your symptoms:</p>
+            
+            <div style="columns: 2;">
+                <label><input type="checkbox"> Fever</label><br>
+                <label><input type="checkbox"> Cough</label><br>
+                <label><input type="checkbox"> Shortness of breath</label><br>
+                <label><input type="checkbox"> Fatigue</label><br>
+                <label><input type="checkbox"> Muscle aches</label><br>
+                <label><input type="checkbox"> Headache</label><br>
+                <label><input type="checkbox"> Sore throat</label><br>
+                <label><input type="checkbox"> Nausea/Vomiting</label><br>
+                <label><input type="checkbox"> Diarrhea</label><br>
+                <label><input type="checkbox"> Rash</label><br>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <button class="btn btn-danger" onclick="analyzeSymptoms()">Analyze Symptoms</button>
+            </div>
+            
+            <div id="diagnosisResult" style="margin-top: 20px; display: none;">
+                <h3>AI Assessment:</h3>
+                <p id="resultText"></p>
+                <p><strong>Recommended Action:</strong> <span id="actionText"></span></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SMS Alert Subscription Modal -->
+    <div id="smsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('smsModal')">&times;</span>
+            <h2>📱 Subscribe to SMS Alerts</h2>
+            <p>Receive real-time outbreak alerts for your region:</p>
+            
+            <form>
+                <div style="margin-bottom: 15px;">
+                    <label>Phone Number:</label>
+                    <input type="tel" placeholder="+1 (555) 123-4567" style="width: 100%; padding: 8px;">
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label>Country/Region:</label>
+                    <select style="width: 100%; padding: 8px;">
+                        <option>Select your country</option>
+                        <option>United States</option>
+                        <option>United Kingdom</option>
+                        <option>India</option>
+                        <option>Brazil</option>
+                        <!-- More countries -->
+                    </select>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label>Alert Types:</label><br>
+                    <label><input type="checkbox" checked> Disease Outbreaks</label><br>
+                    <label><input type="checkbox" checked> Natural Disasters</label><br>
+                    <label><input type="checkbox"> Travel Advisories</label>
+                </div>
+                
+                <button class="btn btn-success" type="button" onclick="alert('Subscription would be processed')">Subscribe</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================== -->
+    <!-- JAVASCRIPT -->
+    <!-- ================== -->
+    <script>
+        // Dark Mode Toggle
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            this.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+            
+            // Save preference to localStorage
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        });
+
+        // Check for saved theme preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+            document.getElementById('themeToggle').textContent = 'Light Mode';
+        }
+
+        // Initialize Map (Leaflet.js)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulated map initialization
+            setTimeout(() => {
+                document.getElementById('outbreakMap').innerHTML = 
+                    '<div style="padding: 20px; text-align: center;">' +
+                    '<h3>Interactive Outbreak Map</h3>' +
+                    '<p>This would display real-time disease hotspots using Leaflet.js</p>' +
+                    '<div style="background: #ddd; height: 200px; margin: 10px 0; display: flex; align-items: center; justify-content: center;">' +
+                    '<p>Map visualization would appear here with:<br>' +
+                    '- Red outbreak zones<br>- Health facility markers<br>- Risk level overlays</p>' +
+                    '</div>' +
+                    '<small>To implement: Add Leaflet.js with your API key</small>' +
+                    '</div>';
+            }, 1000);
+        });
+
+        // Modal Functions
+        function openSymptomChecker() {
+            document.getElementById('symptomModal').style.display = 'block';
+        }
+
+        function showSMSModal() {
+            document.getElementById('smsModal').style.display = 'block';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        // Simulated AI Symptom Analysis
+        function analyzeSymptoms() {
+            document.getElementById('diagnosisResult').style.display = 'block';
+            document.getElementById('resultText').innerHTML = 
+                "Based on your symptoms, there is a <strong>moderate risk</strong> of respiratory infection.";
+            document.getElementById('actionText').innerHTML = 
+                "1. Self-isolate immediately<br>2. Contact your local health provider<br>3. Monitor temperature every 4 hours";
+        }
+
+        // PDF Download Simulation
+        function downloadPhrasebook() {
+            alert("Downloading 'Emergency Medical Phrases - 15 Languages.pdf' (simulated)");
+            // In real implementation, link to actual PDF
+        }
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+    
+    <!-- Leaflet JS for Map (Actual implementation would go here) -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Uncomment and configure with your map provider:
+    <script>
+        var map = L.map('outbreakMap').setView([20, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        
+        // Add outbreak markers and layers here
+    </script>
+    -->
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hepatitis C | Global Disease Surveillance</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="disease-header">
+        <div class="container">
+            <h1><i class="fas fa-liver"></i> Hepatitis C</h1>
+            <p>Hepatitis C Virus (HCV)</p>
+        </div>
+    </header>
+
+    <nav class="disease-nav">
+        <div class="container">
+            <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+    </nav>
+
+    <main class="container disease-container">
+        <section id="description" class="disease-section">
+            <h2><i class="fas fa-info-circle"></i> Description</h2>
+            <p>Hepatitis C is a liver infection caused by the hepatitis C virus (HCV). Hepatitis C can range from a mild illness lasting a few weeks to a serious, lifelong illness that can lead to cirrhosis and liver cancer.</p>
+        </section>
+
+        <section id="statistics" class="disease-section">
+            <h2><i class="fas fa-chart-bar"></i> Global Statistics</h2>
+            <div class="chart-container">
+                <canvas id="globalTrendChart"></canvas>
+            </div>
+            <div class="chart-description">
+                <p>An estimated 58 million people have chronic hepatitis C infection globally, with approximately 1.5 million new infections occurring each year.</p>
+            </div>
+        </section>
+
+        <section id="symptoms" class="disease-section">
+            <h2><i class="fas fa-thermometer-half"></i> Symptoms</h2>
+            <div class="symptoms-grid">
+                <div class="symptom-card">
+                    <h3>Acute HCV</h3>
+                    <ul>
+                        <li>Fever</li>
+                        <li>Fatigue</li>
+                        <li>Dark urine</li>
+                        <li>Clay-colored stool</li>
+                        <li>Abdominal pain</li>
+                    </ul>
+                </div>
+                <div class="symptom-card">
+                    <h3>Chronic HCV</h3>
+                    <ul>
+                        <li>Often asymptomatic for years</li>
+                        <li>Bleeding easily</li>
+                        <li>Bruising easily</li>
+                        <li>Jaundice</li>
+                        <li>Fluid accumulation</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="perspectives" class="disease-section">
+            <h2><i class="fas fa-hourglass-half"></i> Historical, Current and Future Perspectives</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>1989</h3>
+                    <p>HCV first identified and characterized</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>2011</h3>
+                    <p>First direct-acting antivirals (DAAs) approved</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Current</h3>
+                    <p>DAAs can cure >95% of HCV infections</p>
+                </div>
+                <div class="timeline-item">
+                    <h3>Future</h3>
+                    <p>WHO targets elimination by 2030</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="disease-section">
+            <h2><i class="far fa-newspaper"></i> Latest News</h2>
+            <div class="news-grid">
+                <article class="news-card">
+                    <h3>New Treatment Guidelines</h3>
+                    <p>WHO updates recommendations for simplified HCV treatment...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </article>
+                <article class="news-card">
+                    <h3>Elimination Progress</h3>
+                    <p>Country Y becomes first developing nation to eliminate HCV...</p>
+                    <a href="#" class="read-more">Read More</a>
+                </article>
+            </div>
+        </section>
+
+        <section id="country-data" class="disease-section">
+            <h2><i class="fas fa-globe-americas"></i> Country-Specific Data</h2>
+            <div class="country-selector">
+                <select id="countrySelect">
+                    <option value="">Select Country</option>
+                    <option value="EG">Egypt</option>
+                    <option value="US">United States</option>
+                    <option value="PK">Pakistan</option>
+                </select>
+            </div>
+            <div class="chart-container">
+                <canvas id="countryChart"></canvas>
+            </div>
+        </section>
+
+        <section id="prevention" class="disease-section">
+            <h2><i class="fas fa-shield-virus"></i> Prevention Tips</h2>
+            <div class="prevention-grid">
+                <div class="prevention-card">
+                    <i class="fas fa-ban"></i>
+                    <h3>Avoid Sharing</h3>
+                    <p>Never share needles, syringes, or drug preparation equipment</p>
+                </div>
+                <div class="prevention-card">
+                    <i class="fas fa-hand-holding-medical"></i>
+                    <h3>Safe Healthcare</h3>
+                    <p>Ensure safe injection practices and blood product screening</p>
+                </div>
+                <div class="prevention-card">
+                    <i class="fas fa-test-tube"></i>
+                    <h3>Get Tested</h3>
+                    <p>Testing is crucial as symptoms often don't appear for years</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="disease-footer">
+        <div class="container">
+            <p>Data sources: WHO, CDC, ECDC | Last updated: <span id="currentDate"></span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Global Trends Chart
+        const globalCtx = document.getElementById('globalTrendChart').getContext('2d');
+        new Chart(globalCtx, {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'Chronic Cases (millions)',
+                    data: [71, 67, 63, 60, 59, 58],
+                    borderColor: '#9b59b6',
+                    backgroundColor: 'rgba(155, 89, 182, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Global Hepatitis C Chronic Cases'
+                    }
+                }
+            }
+        });
+
+        // Country Data Chart
+        const countryCtx = document.getElementById('countryChart').getContext('2d');
+        let countryChart = new Chart(countryCtx, {
+            type: 'doughnut',
+            data: {},
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Select a country to view data'
+                    }
+                }
+            }
+        });
+
+        // Update country chart when selection changes
+        document.getElementById('countrySelect').addEventListener('change', function() {
+            const country = this.value;
+            if (country) {
+                // In a real app, you would fetch this data from an API
+                const sampleData = {
+                    'EG': {
+                        labels: ['Chronic Cases', 'Cured', 'New Infections'],
+                        data: [5.5, 4.2, 0.15],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    },
+                    'US': {
+                        labels: ['Chronic Cases', 'Cured', 'New Infections'],
+                        data: [2.4, 1.8, 0.05],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    },
+                    'PK': {
+                        labels: ['Chronic Cases', 'Cured', 'New Infections'],
+                        data: [8.8, 3.5, 0.3],
+                        colors: ['#e74c3c', '#2ecc71', '#f39c12']
+                    }
+                };
+                
+                const data = sampleData[country];
+                countryChart.data.labels = data.labels;
+                countryChart.data.datasets = [{
+                    data: data.data,
+                    backgroundColor: data.colors
+                }];
+                countryChart.options.plugins.title.text = `Hepatitis C in ${this.options[this.selectedIndex].text}`;
+                countryChart.update();
+            }
+        });
+
+        // Update current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+    </script>
+</body>
+</html>
